@@ -1,16 +1,6 @@
-data "aws_caller_identity" "current" {}
-
-data "aws_ssoadmin_instances" "this" {}
-
 resource "aws_ssoadmin_permission_set" "administrator_access" {
   name         = "AdministratorAccess"
   instance_arn = tolist(data.aws_ssoadmin_instances.this.arns)[0]
-}
-
-resource "aws_identitystore_group" "administrators" {
-  identity_store_id = tolist(data.aws_ssoadmin_instances.this.identity_store_ids)[0]
-  display_name      = "Administrators"
-  description       = "Administrators"
 }
 
 resource "aws_ssoadmin_account_assignment" "administrator_access_management" {
